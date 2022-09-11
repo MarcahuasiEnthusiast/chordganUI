@@ -4,7 +4,7 @@
 }
 
 body{
-    background-color: #160A47;
+    background-color: #FDFDFD;
     ;
 }
 
@@ -14,6 +14,6 @@ body{
 
 .Route-Text{
     margin: 20px;
-    color: white;
+    color: black;
     text-align: center;
 }

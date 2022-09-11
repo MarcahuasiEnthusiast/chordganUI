@@ -9,10 +9,10 @@ import About from "./pages/About";
 const theme = createTheme({
     palette:{
         primary:{
-            main:'#F2671F'
+            main:'#272727'
         },
         secondary:{
-            main:'#160A47'
+            main:'#FDFDFD'
         }
     }
 })

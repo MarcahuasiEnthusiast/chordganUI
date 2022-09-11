@@ -13,6 +13,8 @@ import {Link} from 'react-router-dom';
 
 
 
+
+
 const pages = ['Home', 'Generate', 'About'];
 
 const NavBar = () => {
@@ -35,6 +37,7 @@ const NavBar = () => {
                         variant="h6"
                         noWrap
                         component="a"
+                        color='secondary'
                         href="/"
                         sx={{
                             mr: 2,
@@ -42,7 +45,7 @@ const NavBar = () => {
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
-                            color: 'secondary',
+
                             textDecoration: 'none',
                         }}
                     >
@@ -74,14 +77,25 @@ const NavBar = () => {
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
+
                             sx={{
                                 display: { xs: 'block', md: 'none'},
+                                '& .MuiMenu-paper': {
+                                    backgroundColor: '#272727',
+                                },
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem key={page} onClick={handleCloseNavMenu}
+
+                                          sx={{
+                                              "&:hover": {
+                                                  backgroundColor: "#464646",
+                                              }
+
+                                          }}>
                                     <Typography textAlign="center">
-                                        <Link to={`/${page}`}>
+                                        <Link style={{textDecoration: "none", color: "#FDFDFD", fontSize: "15px"}} to={`/${page}`}>
                                             {page}
                                         </Link>
                                     </Typography>
@@ -94,6 +108,8 @@ const NavBar = () => {
                         noWrap
                         component="a"
                         href="/Home"
+                        color='secondary'
+
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -101,7 +117,6 @@ const NavBar = () => {
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
-                            color: 'secondary',
                             textDecoration: 'none',
                         }}
                     >
@@ -112,9 +127,13 @@ const NavBar = () => {
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: '#160A47', display: 'block' }}
+                                sx={{ my: 2, display: 'block',
+                                    "&:hover": {
+                                        backgroundColor: "#464646",
+                                    },
+                                }}
                             >
-                                <Link style={{textDecoration: "none", color: "secondary", fontSize: "15px"}} to={`/${page}`}>
+                                <Link style={{textDecoration: "none", color: "#FDFDFD", fontSize: "15px"}} to={`/${page}`}>
                                     {page}
                                 </Link>
                             </Button>
