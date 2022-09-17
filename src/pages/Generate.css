@@ -31,6 +31,12 @@
 
 .lower-panel {
   margin-top: 50px;
+  justify-content: center;
+}
+
+.border {
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  vertical-align: middle;
 }
 
 .player {
@@ -86,7 +92,7 @@
   width: 100%;
   display: inline-block;
   position: relative;
-  float: left;
+  /*float: left;*/
 }
 
 .Results {
@@ -108,3 +114,4 @@
 tone-play-toggle {
   margin-top: 10px;
 }
+

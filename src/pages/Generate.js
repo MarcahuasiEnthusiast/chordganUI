@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {Button, Typography, Divider, Item, Container, Stack, Slider, FormLabel, FormControl, InputLabel, Select, MenuItem, CircularProgress, Snackbar, Alert} from '@mui/material';
 import { Midi } from '@tonejs/midi'
 import * as Tone from 'tone'
-import './OldApp.css';
+import './Generate.css';
+
+// MOVER A UN CSS
 
 // Style sheet
 const formLabelStyling = {
@@ -59,6 +61,13 @@ const downloadButtonStyling = {
   top: "50px"
 }
 
+
+
+
+
+
+
+
 class Gemerate extends Component {
 
   constructor(props) {
@@ -69,11 +78,6 @@ class Gemerate extends Component {
       synths: [],
       isPlaying: false,
 
-      // Snackbar
-      openSnackbar: false,
-      verticalSnackbar: 'bottom',
-      horizontalSnackbar: 'left',
-
       generationWaitingForResponse: false,
 
       memoryLength: 100,
@@ -82,8 +86,14 @@ class Gemerate extends Component {
       downloadDisabled: true, //true
       selectedMIDI: {},
       success: false,
-      filesArray: []
+      filesArray: [],
       // Note: think carefully before initializing state based on props!
+
+      // ESTILOS
+      // Snackbar
+      openSnackbar: false,
+      verticalSnackbar: 'bottom',
+      horizontalSnackbar: 'left',
     }
 
     this.player = React.createRef();
@@ -116,30 +126,12 @@ class Gemerate extends Component {
         "Reading files not supported by this browser";
     } else {
       const fileDrop = document.querySelector("#FileDrop");
-
     }
     
   }
   
-  // Snackbar handlers
-  handleClick = () => {
-      this.setState({openSnackbar: true});
-  };
-  handleClose = () => {
-      this.setState({openSnackbar: false});
-  };
 
-  // onChange handlers
-  memLengthHandler(e, value) {
-    this.setState({memoryLength: value})
-  }
-  numFilesHandler(e, value) {
-    this.setState({numberOfFiles: value})
-  }
-  temperatureHandler(e, value) {
-    this.setState({temperature: value})
-  }
-
+  // BACKEND
 
   // Generate with TransformerGAN
   async generate() {
@@ -209,6 +201,9 @@ class Gemerate extends Component {
 
     // DUMMY WORKFLOW FOR UI DEVELOPMENT!
     this.setState({generationWaitingForResponse: true, success: false, downloadDisabled: true})
+
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    await delay(5000);
 
     this.setState({generationWaitingForResponse: false})
     console.log("GENERATION RESPONSE!");
@@ -356,10 +351,39 @@ class Gemerate extends Component {
       }
 
     }
-
   }
 
+
+
+
+
+
+
   
+
+
+  // UI
+
+  // Snackbar handlers
+  handleClick = () => {
+      this.setState({openSnackbar: true});
+  };
+  handleClose = () => {
+      this.setState({openSnackbar: false});
+  };
+
+  // onChange handlers
+  memLengthHandler(e, value) {
+    this.setState({memoryLength: value})
+  }
+  numFilesHandler(e, value) {
+    this.setState({numberOfFiles: value})
+  }
+  temperatureHandler(e, value) {
+    this.setState({temperature: value})
+  }
+
+
 
   render() {
     return (
@@ -378,7 +402,7 @@ class Gemerate extends Component {
 
           <div className='upper-panel'>
             <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} sx={upperPanelStyling} >
-              <FormLabel id="slider1Label" sx={formLabelStyling}> Memory Length </FormLabel>
+              <FormLabel id="slider1Label" className='formLabelStyling' sx={formLabelStyling}> Memory Length </FormLabel>
               <Slider 
                 sx={sliderMemoryLengthStyling}
                 aria-label="MemoryLength" 
@@ -461,9 +485,11 @@ class Gemerate extends Component {
             </>
             :
             <>
-              <div className='lower-panel'>
+              <div className='lower-panel' >
                 {this.state.generationWaitingForResponse &&
-                  <CircularProgress size={90} color="inherit" />
+                  <div style={{justifyContent: "center"}}>
+                    <CircularProgress className='border' thickness={18} size={90} color="inherit" />
+                  </div>
                 }
               </div>
               <Snackbar
