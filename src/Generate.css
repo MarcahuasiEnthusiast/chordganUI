@@ -105,6 +105,36 @@
   font-family: sans-serif;
 }
 
-tone-play-toggle {
+.tone-play-toggle {
   margin-top: 10px;
 }
+
+.lowerMIDIPanel{
+  margin-top: 35px;
+}
+
+.upperPanelStyling {
+  margin-top: 25px;
+  justify-content: center;
+}
+
+.lowerPanelStyling{
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.downloadButtonStyling{
+  width: 50%;
+  height: 50%;
+  top: 50px;
+
+}
+
+.customPlayer{
+  margin-top: -30px;
+}
+
+
+
+
+

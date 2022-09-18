@@ -2,64 +2,76 @@ import React, { Component } from 'react';
 import {Button, Typography, Divider, Item, Container, Stack, Slider, FormLabel, FormControl, InputLabel, Select, MenuItem, CircularProgress, Snackbar, Alert} from '@mui/material';
 import { Midi } from '@tonejs/midi'
 import * as Tone from 'tone'
-import './OldApp.css';
+import { styled } from '@mui/material/styles';
+import '../Generate.css';
 
-// Style sheet
-const formLabelStyling = {
-  color: "rgb(0, 0, 0)",
+
+
+const CustomSlider = styled(Slider)(({ theme }) => ({
+  color: '#272727',
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
-  overflow: "hidden"
-};
+  marginTop: "-10px !important",
+  height: 8,
+  '& .MuiSlider-track': {
+    border: 'none',
+  },
+  '& .MuiSlider-thumb': {
+    height: 24,
+    width: 24,
+    backgroundColor: '#f2f2f2',
+    border: '2px solid currentColor',
+    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+      boxShadow: 'inherit',
+    },
+    '&:before': {
+      display: 'none',
+    },
+  },
+  '& .MuiSlider-valueLabel': {
+    lineHeight: 1.2,
+    fontSize: 10,
+    background: 'unset',
+    padding: 0,
+    width: 30,
+    height: 30,
+    borderRadius: '50% 50% 50% 0',
+    backgroundColor: '#858585',
+    transformOrigin: 'bottom left',
+    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+    '&:before': { display: 'none' },
+    '&.MuiSlider-valueLabelOpen': {
+      transform: 'translate(50%, -85%) rotate(-45deg) scale(1)',
+    },
+    '& > *': {
+      transform: 'rotate(45deg)',
+    },
+  },
+}));
 
-const sliderLabelNumberOfFilesStyling = {
-  color: "rgb(0, 0, 0)",
+const CustomFormLabel = styled(FormLabel)(({ theme }) => ({
+
+  color: '#272727',
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
-  overflow: "hidden",
-  marginTop: "-10px !important"
-}
+  overflow: 'hidden',
 
-const MIDISelectLabel = {
-  color: "rgb(0, 0, 0)",
-  whiteSpace: "nowrap",
-  textOverflow: "ellipsis",
-  overflow: "hidden",
-}
+}));
 
-const lowerMIDIPanel = {
-  marginTop: "35px",
-}
+const CustomButton = styled(Button)(({ theme }) => ({
+  color: "#fdfdfd",
+  backgroundColor: "#272727",
+  textAlign: "center",
+  borderRadius: '8px',
+  '&:hover': {
+    backgroundColor: '#858585',
+    color: '#fdfdfd',
+  },
 
-const upperPanelStyling = {
-  marginTop: "25px",
-  justifyContent: "center"
-}
 
-const lowerPanelStyling = {
-  marginTop: "20px",
-  justifyContent: "center"
-}
+}));
 
-const sliderMemoryLengthStyling = {
-  color: "rgb(0, 0, 0)",
-  marginTop: "-10px !important"
-}
-
-const generateButtonStyling = {
-  color: "rgb(255, 240, 230)",
-  backgroundColor: "rgb(0, 0, 0)"
-}
-
-const downloadButtonStyling = {
-  width: "50%",
-  height: "50%",
-  color: "rgb(255, 240, 230)",
-  backgroundColor: "rgb(0, 0, 0)",
-  top: "50px"
-}
-
-class Gemerate extends Component {
+class Generate extends Component {
 
   constructor(props) {
     super(props); // check why? study
@@ -376,41 +388,37 @@ class Gemerate extends Component {
         
         <Container maxWidth="sm">
 
-          <div className='upper-panel'>
-            <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} sx={upperPanelStyling} >
-              <FormLabel id="slider1Label" sx={formLabelStyling}> Memory Length </FormLabel>
-              <Slider 
-                sx={sliderMemoryLengthStyling}
-                aria-label="MemoryLength" 
-                valueLabelDisplay="auto" 
-                min={100} max={2070} step={10} 
-                value={this.state.memoryLength} 
-                onChange={this.memLengthHandler}
-              />
-              
-              <FormLabel id="slider2Label" sx={sliderLabelNumberOfFilesStyling}> Number of Files </FormLabel>
-              <Slider 
-                sx={sliderMemoryLengthStyling} 
-                aria-label="NumberOfFiles" 
-                valueLabelDisplay="auto" 
-                min={1} max={5} step={1} 
-                value={this.state.numberOfFiles} 
-                onChange={this.numFilesHandler}
+          <div>
+            <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} className='upperPanelStyling'>
+              <CustomFormLabel id="slider1Label"> Memory Length </CustomFormLabel>
+                <CustomSlider
+                    aria-label="MemoryLength"
+                    valueLabelDisplay="auto"
+                    min={100} max={2070} step={10}
+                    value={this.state.memoryLength}
+                    onChange={this.memLengthHandler}
+                />
+              <CustomFormLabel id="slider2Label"> Number of Files </CustomFormLabel>
+              <CustomSlider
+                  aria-label="NumberOfFiles"
+                  valueLabelDisplay="auto"
+                  min={1} max={5} step={1}
+                  value={this.state.numberOfFiles}
+                  onChange={this.numFilesHandler}
               />
 
-              <FormLabel id="slider3Label" sx={sliderLabelNumberOfFilesStyling}> Temperature</FormLabel>
-              <Slider 
-                sx={sliderMemoryLengthStyling} 
-                aria-label="Temperature" 
-                valueLabelDisplay="auto"
-                min={0.80} max={1.20} step={0.01} 
-                value={this.state.temperature} 
-                onChange={this.temperatureHandler}
+              <CustomFormLabel id="slider3Label"> Temperature</CustomFormLabel>
+              <CustomSlider
+                  aria-label="Temperature"
+                  valueLabelDisplay="auto"
+                  min={0.80} max={1.20} step={0.01}
+                  value={this.state.temperature}
+                  onChange={this.temperatureHandler}
               />
             </Stack>
 
-            <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />} sx={lowerPanelStyling} >
-              <Button variant="text" className='Generate-Button' sx={generateButtonStyling} onClick={this.generate}>Generate</Button>
+            <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />} className='lowerPanelStyling' >
+                <CustomButton variant="text"  onClick={this.generate}>Generate</CustomButton>
               {/* <Button href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="contained" className='Download-Button' sx={generateButtonStyling} download="generated.zip">Download</Button> */}
             </Stack>
           </div>
@@ -419,8 +427,8 @@ class Gemerate extends Component {
 
             <>
               <div className='lower-panel'>
-                <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} sx={lowerMIDIPanel} >
-                  <FormLabel id="MIDISelectLabel" sx={MIDISelectLabel}> Select a file and press play to hear an audio preview </FormLabel>
+                <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} className='lowerMIDIPanel' >
+                  <CustomFormLabel id="MIDISelectLabel" sx={{marginTop:-3}}> Select a file and press play to hear an audio preview </CustomFormLabel>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">MIDI</InputLabel>
                     <Select
@@ -438,9 +446,9 @@ class Gemerate extends Component {
                   </FormControl>
                 </Stack>
                 
-                <Stack direction="row" spacing={1} divider={<Divider orientation="vertical" flexItem />} sx={lowerPanelStyling} >
+                <Stack direction="row" spacing={1} divider={<Divider  orientation="vertical" flexItem />} className='lowerPanelStyling' >
 
-                  <div>
+                  <div className='customPlayer'>
                     <tone-content>
                       <tone-play-toggle
                         ref={this.player}
@@ -450,8 +458,12 @@ class Gemerate extends Component {
                       </tone-play-toggle>
                     </tone-content>
                   </div>
-                  <Button href='http://localhost:5000/getFile/' disabled={this.state.selectedMIDI && false} variant="text" className='Download-Button' sx={downloadButtonStyling} download={this.state.selectedMIDI}>Download Selected</Button>
-                  <Button href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="text" className='Download-Button' sx={downloadButtonStyling} download="generated.zip">Download All</Button>
+                  <div className='downloadButtonStyling'>
+                    <CustomButton href='http://localhost:5000/getFile/' disabled={this.state.selectedMIDI && false} variant="text"  download={this.state.selectedMIDI}>Download Selected</CustomButton>
+                  </div>
+                  <div className='downloadButtonStyling'>
+                    <CustomButton href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="text" className='Download-Button'  download="generated.zip">Download All</CustomButton>
+                  </div>
                 </Stack>
                 
                 <br></br>
@@ -487,4 +499,4 @@ class Gemerate extends Component {
   }
 }
 
-export default Gemerate;
+export default Generate;

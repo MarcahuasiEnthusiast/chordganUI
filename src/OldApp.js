@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Button, Typography, Divider, Item, Container, Stack, Slider, FormLabel, FormControl, InputLabel, Select, MenuItem, CircularProgress, Snackbar, Alert} from '@mui/material';
 import { Midi } from '@tonejs/midi'
 import * as Tone from 'tone'
-import './OldApp.css';
+import './Generate.css';
 
 // Style sheet
 const formLabelStyling = {
