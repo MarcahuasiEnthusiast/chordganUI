@@ -1,5 +1,23 @@
 import React, { Component } from 'react';
-import {Button, Typography, Divider, Item, Container, Stack, Slider, FormLabel, FormControl, InputLabel, Select, MenuItem, CircularProgress, Snackbar, Alert} from '@mui/material';
+import {
+  Button,
+  Typography,
+  Divider,
+  Item,
+  Container,
+  Stack,
+  Slider,
+  FormLabel,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  CircularProgress,
+  Snackbar,
+  Alert,
+  Card,
+  CardContent,
+} from '@mui/material';
 import { Midi } from '@tonejs/midi'
 import * as Tone from 'tone'
 import { styled } from '@mui/material/styles';
@@ -55,6 +73,8 @@ const CustomFormLabel = styled(FormLabel)(({ theme }) => ({
   overflow: 'hidden',
 
 }));
+
+
 
 const CustomButton = styled(Button)(({ theme }) => ({
   color: "#fdfdfd",
@@ -388,18 +408,20 @@ class Generate extends Component {
 
   render() {
     return (
+
+
         <div className="App">
-
-          <Typography style={{textAlign: "center", paddingTop:"15px"}} variant="h1" component="h2">
+          <Container maxWidth='sm'>
+            <Card sx={{backgroundColor: '#999999', marginY:7, borderRadius:12, boxShadow: "-10px 10px 10px rgb(126,126,126)"}}>
+            <CardContent >
+          <Typography style={{textAlign: "center", padding:"10px"}} variant="h1" component="h2">
             ChordGAN
-          </Typography>;
-
+          </Typography>
           <header className="App-header">
             {/*<h1 className="OldApp-title">ChordGAN</h1>*/}
-            <h4>Generative Adversarial Neural Networks for Random and Complex Chord Progression Generation</h4>
+            <Typography sx={{color: '#fdfdfd', textAlign:'justify', paddingX:2, fontFamily: 'sans-serif', fontSize:'15px'}} >Generative Adversarial Neural Networks for Random and Complex Chord Progression Generation</Typography>
           </header>
 
-          <Container maxWidth="sm">
 
             <div className='upper-panel'>
               <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} className='upperPanelStyling' >
@@ -483,7 +505,7 @@ class Generate extends Component {
 
                     <br></br>
                     <br></br>
-                    <p>{JSON.stringify(this.state)}</p>
+                    {/* <p>{JSON.stringify(this.state)}</p> */}
                   </div>
                 </>
                 :
@@ -508,7 +530,8 @@ class Generate extends Component {
 
                 </>
             }
-
+            </CardContent>
+            </Card>
           </Container>
 
 

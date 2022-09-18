@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
 
 const About = () => {
     return <div className="Route-Text">
         <h2>
-            About Route
+            Generative Adversarial Neural Networks for Random and Complex Chord Progression Generation
         </h2>
     </div>
 };
 
 export default About;
+
