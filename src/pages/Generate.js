@@ -5,8 +5,6 @@ import * as Tone from 'tone'
 import { styled } from '@mui/material/styles';
 import '../Generate.css';
 
-
-
 const CustomSlider = styled(Slider)(({ theme }) => ({
   color: '#272727',
   whiteSpace: "nowrap",
@@ -71,8 +69,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
 
 }));
 
-class Generate extends Component {
-
+class Gemerate extends Component {
   constructor(props) {
     super(props); // check why? study
 
@@ -80,11 +77,6 @@ class Generate extends Component {
       currentMidi: {},
       synths: [],
       isPlaying: false,
-
-      // Snackbar
-      openSnackbar: false,
-      verticalSnackbar: 'bottom',
-      horizontalSnackbar: 'left',
 
       generationWaitingForResponse: false,
 
@@ -94,8 +86,14 @@ class Generate extends Component {
       downloadDisabled: true, //true
       selectedMIDI: {},
       success: false,
-      filesArray: []
+      filesArray: [],
       // Note: think carefully before initializing state based on props!
+
+      // ESTILOS
+      // Snackbar
+      openSnackbar: false,
+      verticalSnackbar: 'bottom',
+      horizontalSnackbar: 'left',
     }
 
     this.player = React.createRef();
@@ -128,30 +126,12 @@ class Generate extends Component {
         "Reading files not supported by this browser";
     } else {
       const fileDrop = document.querySelector("#FileDrop");
-
     }
     
   }
   
-  // Snackbar handlers
-  handleClick = () => {
-      this.setState({openSnackbar: true});
-  };
-  handleClose = () => {
-      this.setState({openSnackbar: false});
-  };
 
-  // onChange handlers
-  memLengthHandler(e, value) {
-    this.setState({memoryLength: value})
-  }
-  numFilesHandler(e, value) {
-    this.setState({numberOfFiles: value})
-  }
-  temperatureHandler(e, value) {
-    this.setState({temperature: value})
-  }
-
+  // BACKEND
 
   // Generate with TransformerGAN
   async generate() {
@@ -221,6 +201,9 @@ class Generate extends Component {
 
     // DUMMY WORKFLOW FOR UI DEVELOPMENT!
     this.setState({generationWaitingForResponse: true, success: false, downloadDisabled: true})
+
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    await delay(5000);
 
     this.setState({generationWaitingForResponse: false})
     console.log("GENERATION RESPONSE!");
@@ -368,10 +351,39 @@ class Generate extends Component {
       }
 
     }
-
   }
 
+
+
+
+
+
+
   
+
+
+  // UI
+
+  // Snackbar handlers
+  handleClick = () => {
+      this.setState({openSnackbar: true});
+  };
+  handleClose = () => {
+      this.setState({openSnackbar: false});
+  };
+
+  // onChange handlers
+  memLengthHandler(e, value) {
+    this.setState({memoryLength: value})
+  }
+  numFilesHandler(e, value) {
+    this.setState({numberOfFiles: value})
+  }
+  temperatureHandler(e, value) {
+    this.setState({temperature: value})
+  }
+
+
 
   render() {
     return (
@@ -388,23 +400,26 @@ class Generate extends Component {
         
         <Container maxWidth="sm">
 
-          <div>
-            <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} className='upperPanelStyling'>
-              <CustomFormLabel id="slider1Label"> Memory Length </CustomFormLabel>
-                <CustomSlider
-                    aria-label="MemoryLength"
-                    valueLabelDisplay="auto"
-                    min={100} max={2070} step={10}
-                    value={this.state.memoryLength}
-                    onChange={this.memLengthHandler}
-                />
-              <CustomFormLabel id="slider2Label"> Number of Files </CustomFormLabel>
-              <CustomSlider
-                  aria-label="NumberOfFiles"
-                  valueLabelDisplay="auto"
-                  min={1} max={5} step={1}
-                  value={this.state.numberOfFiles}
-                  onChange={this.numFilesHandler}
+          <div className='upper-panel'>
+            <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} sx={upperPanelStyling} >
+              <FormLabel id="slider1Label" className='formLabelStyling' sx={formLabelStyling}> Memory Length </FormLabel>
+              <Slider 
+                sx={sliderMemoryLengthStyling}
+                aria-label="MemoryLength" 
+                valueLabelDisplay="auto" 
+                min={100} max={2070} step={10} 
+                value={this.state.memoryLength} 
+                onChange={this.memLengthHandler}
+              />
+              
+              <FormLabel id="slider2Label" sx={sliderLabelNumberOfFilesStyling}> Number of Files </FormLabel>
+              <Slider 
+                sx={sliderMemoryLengthStyling} 
+                aria-label="NumberOfFiles" 
+                valueLabelDisplay="auto" 
+                min={1} max={5} step={1} 
+                value={this.state.numberOfFiles} 
+                onChange={this.numFilesHandler}
               />
 
               <CustomFormLabel id="slider3Label"> Temperature</CustomFormLabel>
@@ -473,9 +488,11 @@ class Generate extends Component {
             </>
             :
             <>
-              <div className='lower-panel'>
+              <div className='lower-panel' >
                 {this.state.generationWaitingForResponse &&
-                  <CircularProgress size={90} color="inherit" />
+                  <div style={{justifyContent: "center"}}>
+                    <CircularProgress className='border' thickness={18} size={90} color="inherit" />
+                  </div>
                 }
               </div>
               <Snackbar
