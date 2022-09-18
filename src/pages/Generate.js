@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import generateVideo from '../assets/generateVideo.mp4'
 import {
   Button,
   Typography,
@@ -22,6 +23,9 @@ import { Midi } from '@tonejs/midi'
 import * as Tone from 'tone'
 import { styled } from '@mui/material/styles';
 import '../Generate.css';
+
+
+
 
 const CustomSlider = styled(Slider)(({ theme }) => ({
   color: '#272727',
@@ -411,9 +415,27 @@ class Generate extends Component {
 
 
         <div className="App">
+          <video
+          autoPlay
+          loop
+          muted
+          style={{
+            position: 'absolute',
+            width: '100%',
+            left:'50%',
+            top:'65%',
+            height:'200%',
+            objectFit: 'cover',
+            transform: 'translate(-50%,-50%)',
+            zIndex: '-1'
+          }}
+          >
+            <source src={generateVideo} type="video/mp4" />
+          </video>
+
           <Container maxWidth='sm'>
             <Card sx={{backgroundColor: '#999999', marginY:7, borderRadius:12, boxShadow: "-10px 10px 10px rgb(126,126,126)"}}>
-            <CardContent >
+            <CardContent>
           <Typography style={{textAlign: "center", padding:"10px"}} variant="h1" component="h2">
             ChordGAN
           </Typography>
@@ -455,7 +477,7 @@ class Generate extends Component {
               </Stack>
 
               <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />} className='lowerPanelStyling' >
-                <CustomButton variant="text"  onClick={this.generate}>Generate</CustomButton>
+                <CustomButton variant="text"  onClick={this.generate} sx={{marginBottom:3}}>Generate</CustomButton>
                 {/* <Button href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="contained" className='Download-Button' sx={generateButtonStyling} download="generated.zip">Download</Button> */}
               </Stack>
             </div>
@@ -510,10 +532,10 @@ class Generate extends Component {
                 </>
                 :
                 <>
-                  <div className='lower-panel' >
+                  <div className='lower-panel-2' >
                     <div style={{textAlign: "center"}}>
                       {this.state.generationWaitingForResponse &&
-                      <CircularProgress className='border' thickness={18} size={90} color="inherit" />
+                      <CircularProgress className='border' thickness={18} size={90} color="inherit" sx={{marginBottom:3}}/>
                       }
                     </div>
 
@@ -533,9 +555,9 @@ class Generate extends Component {
             </CardContent>
             </Card>
           </Container>
-
-
         </div>
+
+
     );
   }
 }
