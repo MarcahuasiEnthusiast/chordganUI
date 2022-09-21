@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import generateVideo from '../assets/generateVideo.mp4'
+import generateVideo from '../assets/generateVideo.mp4';
 import {
   Button,
   Typography,
@@ -23,9 +23,7 @@ import { Midi } from '@tonejs/midi'
 import * as Tone from 'tone'
 import { styled } from '@mui/material/styles';
 import '../Generate.css';
-
-
-
+import { borderRadius } from '@mui/system';
 
 const CustomSlider = styled(Slider)(({ theme }) => ({
   color: '#272727',
@@ -133,6 +131,7 @@ class Generate extends Component {
     this.handleClose = this.handleClose.bind(this)
     this.playSelectedFile = this.playSelectedFile.bind(this)
     this.parseFile = this.parseFile.bind(this)
+    this.setPlayButtonProp = this.setPlayButtonProp.bind(this)
   }
 
 
@@ -160,33 +159,36 @@ class Generate extends Component {
 
   // Generate with TransformerGAN
   async generate() {
-    //aconsole.log("to config -> ", this.state.memoryLength, this.state.numberOfFiles)
+    console.log("to config -> ", this.state.memoryLength, this.state.numberOfFiles, this.state.temperature)
 
     // TODO -> clean MIDI data arrays, etc
 
     // MAIN!!!!!!! do not delete!!!
-    /*
 
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ memoryLength: this.state.memoryLength, numberOfFiles: this.state.numberOfFiles })
+      body: JSON.stringify({ memoryLength: this.state.memoryLength, numberOfFiles: this.state.numberOfFiles, temperature: this.state.temperature })
     };
 
     var generateResponse = ""
     this.setState({generationWaitingForResponse: true, success: false, downloadDisabled: true})
 
+
+    /*
+
+
     await fetch('/config_inference', requestOptions).catch(error => {
-      console.log(error);
+      console.log("config inference:", error);
       this.setState({generationWaitingForResponse: false})
       this.handleClick()
     }).then(response => response.json()).catch(error => {
-      console.log(error);
+      console.log("config inference", error);
       this.setState({generationWaitingForResponse: false})
       this.handleClick()
-    }).then(data => console.log("config update:",data))
+    }).then(data => console.log("config updated:",data))
     .catch(error => {
-      console.log(error);
+      console.log("config inference", error);
       this.setState({generationWaitingForResponse: false})
       this.handleClick()
     })
@@ -209,7 +211,7 @@ class Generate extends Component {
           this.setState({generationWaitingForResponse: false})
           this.setState({downloadDisabled: false})
           // Load dropdown options with generated data
-          fetch('/ListMidiFiles').then(response => response.json()).then(data => this.setState({success: true, filesArray: data})).then(data => console.log("FILES ARRAY:", data))
+          fetch('/listMidiFiles').then(response => response.json()).then(data => this.setState({success: true, filesArray: data})).then(data => console.log("FILES ARRAY:", data))
         }
         else {
           console.log("ERROR when generating: ", generateResponse)
@@ -223,6 +225,7 @@ class Generate extends Component {
       this.handleClick()
     });
     */
+
 
     // DUMMY WORKFLOW FOR UI DEVELOPMENT!
     this.setState({generationWaitingForResponse: true, success: false, downloadDisabled: true})
@@ -238,6 +241,12 @@ class Generate extends Component {
 
     this.setState({success: true, filesArray:[] })
 
+    this.setPlayButtonProp();
+  }
+
+  setPlayButtonProp() {
+    console.log("PLAYER", this.player)
+    this.player.current.clientWidth = 100;
   }
 
   async downloadAll() {
@@ -339,6 +348,8 @@ class Generate extends Component {
   async playSelectedFile() {
     const midi = this.state.currentMidi
     console.log("midi", midi)
+    console.log(this.player)
+    this.setPlayButtonProp();
 
     let synths = []
     if (midi != null) {
@@ -359,7 +370,7 @@ class Generate extends Component {
         midi.tracks[0].notes.forEach(note => {
           synth.triggerAttackRelease(note.name, note.duration, note.time + now, note.velocity)
         })
-        console.log(this.player)
+
         this.player.current.disabled = true
         this.player.current.hidden = true
         await new Promise(r => setTimeout(r, midi.duration*1000));
@@ -414,150 +425,148 @@ class Generate extends Component {
     return (
 
 
-        <div className="App">
+        <div >
+
           <video
-          autoPlay
-          loop
-          muted
-          style={{
-            position: 'absolute',
-            width: '100%',
-            left:'50%',
-            top:'65%',
-            height:'200%',
-            objectFit: 'cover',
-            transform: 'translate(-50%,-50%)',
-            zIndex: '-1'
-          }}
+              disableRemotePlayback={true}
+              autoPlay
+              loop
+              muted
+              style={{
+                position: 'absolute',
+                width: '100%',
+                left:'',
+                top:'1px',
+                height:'100%',
+                objectFit: 'cover',
+                zIndex: '-1',
+                opacity: .3
+              }}
           >
             <source src={generateVideo} type="video/mp4" />
           </video>
 
-          <Container maxWidth='sm'>
-            <Card sx={{backgroundColor: '#999999', marginY:7, borderRadius:12, boxShadow: "-10px 10px 10px rgb(126,126,126)"}}>
-            <CardContent>
-          <Typography style={{textAlign: "center", padding:"10px"}} variant="h1" component="h2">
-            ChordGAN
-          </Typography>
-          <header className="App-header">
-            {/*<h1 className="OldApp-title">ChordGAN</h1>*/}
-            <Typography sx={{color: '#fdfdfd', textAlign:'justify', paddingX:2, fontFamily: 'sans-serif', fontSize:'15px'}} >Generative Adversarial Neural Networks for Random and Complex Chord Progression Generation</Typography>
-          </header>
+          <Container maxWidth='sm' style={{marginTop: this.state.generationWaitingForResponse ? 140 : this.state.success ? 140 : 180}} className="App2" >
+            <Card sx={{backgroundColor: '#999999', marginTop:7, height: this.state.generationWaitingForResponse ? 532 : this.state.success ? 575 : 432, borderRadius:12, boxShadow: "-7px 7px 7px rgb(88,88,88)"}}>
+              <CardContent >
+                <Typography style={{textAlign: "center", padding:"10px"}} variant="h3" >
+                  ChordGAN
+                </Typography>
 
+                <div className='upper-panel'>
+                  <Stack direction="column" spacing={this.state.success ? 1 : 2} divider={<Divider orientation="vertical" flexItem />} className='upperPanelStyling' >
+                    <FormLabel id="slider1Label"  > Memory Length </FormLabel>
+                    <CustomSlider
+                        aria-label="MemoryLength"
+                        valueLabelDisplay="auto"
+                        min={100} max={1000} step={10}
+                        value={this.state.memoryLength}
+                        onChange={this.memLengthHandler}
+                    />
 
-            <div className='upper-panel'>
-              <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} className='upperPanelStyling' >
-                <FormLabel id="slider1Label"  > Memory Length </FormLabel>
-                <CustomSlider
-                    aria-label="MemoryLength"
-                    valueLabelDisplay="auto"
-                    min={100} max={2070} step={10}
-                    value={this.state.memoryLength}
-                    onChange={this.memLengthHandler}
-                />
+                    <FormLabel id="slider2Label" > Number of Files </FormLabel>
+                    <CustomSlider
+                        aria-label="NumberOfFiles"
+                        valueLabelDisplay="auto"
+                        min={1} max={5} step={1}
+                        value={this.state.numberOfFiles}
+                        onChange={this.numFilesHandler}
+                    />
 
-                <FormLabel id="slider2Label" > Number of Files </FormLabel>
-                <CustomSlider
-                    aria-label="NumberOfFiles"
-                    valueLabelDisplay="auto"
-                    min={1} max={5} step={1}
-                    value={this.state.numberOfFiles}
-                    onChange={this.numFilesHandler}
-                />
+                    <FormLabel id="slider3Label" > Temperature </FormLabel>
+                    <CustomSlider
+                        aria-label="Temperature"
+                        valueLabelDisplay="auto"
+                        min={0.80} max={1.20} step={0.01}
+                        value={this.state.temperature}
+                        onChange={this.temperatureHandler}
+                    />
 
-                <FormLabel id="slider3Label" > Temperature </FormLabel>
-                <CustomSlider
-                    aria-label="Temperature"
-                    valueLabelDisplay="auto"
-                    min={0.80} max={1.20} step={0.01}
-                    value={this.state.temperature}
-                    onChange={this.temperatureHandler}
-                />
+                  </Stack>
 
-              </Stack>
+                  <Stack direction="row" spacing={3}  className='lowerPanelStyling' >
+                    <CustomButton variant="text"  onClick={this.generate}>Generate</CustomButton>
+                    {/* <Button href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="contained" className='Download-Button' sx={generateButtonStyling} download="generated.zip">Download</Button> */}
+                  </Stack>
+                </div>
 
-              <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />} className='lowerPanelStyling' >
-                <CustomButton variant="text"  onClick={this.generate} sx={{marginBottom:3}}>Generate</CustomButton>
-                {/* <Button href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="contained" className='Download-Button' sx={generateButtonStyling} download="generated.zip">Download</Button> */}
-              </Stack>
-            </div>
+                {this.state.success ?
 
-            {this.state.success ?
+                    <>
+                      <div className='lower-panel'>
+                        <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} className='lowerMIDIPanel' >
+                          <CustomFormLabel id="MIDISelectLabel" sx={{marginTop:-3}}> Select a file and press play to hear an audio preview </CustomFormLabel>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">MIDI</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                label="Age"
+                                onChange={this.selectedMIDIHandler}
+                            >
 
-                <>
-                  <div className='lower-panel'>
-                    <Stack direction="column" spacing={2} divider={<Divider orientation="vertical" flexItem />} className='lowerMIDIPanel' >
-                      <CustomFormLabel id="MIDISelectLabel" sx={{marginTop:-3}}> Select a file and press play to hear an audio preview </CustomFormLabel>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">MIDI</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Age"
-                            onChange={this.selectedMIDIHandler}
-                        >
+                              {this.state.filesArray.map(item => {
+                                return <MenuItem value={item}>{item}</MenuItem>;
+                              })}
 
-                          {this.state.filesArray.map(item => {
-                            return <MenuItem value={item}>{item}</MenuItem>;
-                          })}
+                            </Select>
+                          </FormControl>
+                        </Stack>
 
-                        </Select>
-                      </FormControl>
-                    </Stack>
+                        <Stack direction="row" sx={{textAlign:'center'}} spacing={1} divider={<Divider orientation="vertical" flexItem />} className='lowerPanelStyling' >
 
-                    <Stack direction="row" spacing={1} className='lowerPanelStyling' >
+                          <div className='customPlayer'>
+                            <tone-content style={{width:320, height:50}}>
+                              <tone-play-toggle
+                                  ref={this.player}
+                                  disabled={this.state.isPlaying}
+                                  onClick={this.playSelectedFile}
+                                  style={{width:250, height:20}}
+                              >
+                              </tone-play-toggle>
+                            </tone-content>
+                          </div>
+                          <div className='downloadButtonStyling'>
+                            <CustomButton href='http://localhost:5000/getFile/' disabled={this.state.selectedMIDI && false} sx={{borderRadius: 45, width: 105, fontSize:'12px', right:30, top:5}} variant="text"  download={this.state.selectedMIDI}>Download Selected</CustomButton>
+                          </div>
+                          <div className='downloadButtonStyling'>
+                            <CustomButton href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} sx={{borderRadius: 65, width: 105, fontSize:'12px', right:30, top:5}} variant="text" className='Download-Button'  download="generated.zip">Download All</CustomButton>
+                          </div>
+                        </Stack>
 
-                      <div className='customPlayer'>
-                        <tone-content>
-                          <tone-play-toggle
-                              ref={this.player}
-                              disabled={this.state.isPlaying}
-                              onClick={this.playSelectedFile}
-                          >
-                          </tone-play-toggle>
-                        </tone-content>
+                        <br></br>
+                        <br></br>
+                        {/* <p>{JSON.stringify(this.state)}</p> */}
                       </div>
-                      <div className='downloadButtonStyling'>
-                        <CustomButton href='http://localhost:5000/getFile/' disabled={this.state.selectedMIDI && false} variant="text"  download={this.state.selectedMIDI}>Download Selected</CustomButton>
+                    </>
+                    :
+                    <>
+                      <div className='lower-panel' >
+                        <div style={{textAlign: "center"}}>
+                          {this.state.generationWaitingForResponse &&
+                          <CircularProgress className='border' thickness={18} size={90} color="inherit" />
+                          }
+                        </div>
+
                       </div>
-                      <div className='downloadButtonStyling'>
-                        <CustomButton href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="text" className='Download-Button'  download="generated.zip">Download All</CustomButton>
-                      </div>
-                    </Stack>
+                      <Snackbar
+                          anchorOrigin={{'vertical':this.state.verticalSnackbar, 'horizontal':this.state.horizontalSnackbar}}
+                          open={this.state.openSnackbar}
+                          onClose={this.handleClose}
+                      >
+                        <Alert onClose={this.handleClose} severity="error" sx={{ width: '100%' }}>
+                          An error occured when trying to generate data
+                        </Alert>
+                      </Snackbar>
 
-                    <br></br>
-                    <br></br>
-                    {/* <p>{JSON.stringify(this.state)}</p> */}
-                  </div>
-                </>
-                :
-                <>
-                  <div className='lower-panel-2' >
-                    <div style={{textAlign: "center"}}>
-                      {this.state.generationWaitingForResponse &&
-                      <CircularProgress className='border' thickness={18} size={90} color="inherit" sx={{marginBottom:3}}/>
-                      }
-                    </div>
-
-                  </div>
-                  <Snackbar
-                      anchorOrigin={{'vertical':this.state.verticalSnackbar, 'horizontal':this.state.horizontalSnackbar}}
-                      open={this.state.openSnackbar}
-                      onClose={this.handleClose}
-                  >
-                    <Alert onClose={this.handleClose} severity="error" sx={{ width: '100%' }}>
-                      An error occured when trying to generate data
-                    </Alert>
-                  </Snackbar>
-
-                </>
-            }
-            </CardContent>
+                    </>
+                }
+              </CardContent>
             </Card>
           </Container>
+
+
         </div>
-
-
     );
   }
 }
