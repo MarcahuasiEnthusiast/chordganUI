@@ -5,7 +5,7 @@ const VideoBackground = () => {
     return (
         <div className="video-background">
         <iframe
-            src="https://www.youtube.com/embed/videoseries?list=PLy1bC-662HHKXOVHInxvhSRReDz0d4xCI&index=5&autoplay=1&mute=1&modestbranding=1&showinfo=0&enablejsapi=1&&widgetid=3&start=50"
+            src="https://www.youtube.com/embed/videoseries?list=PLy1bC-662HHKXOVHInxvhSRReDz0d4xCI&index=5&autoplay=1&mute=1&modestbranding=1&showinfo=0&enablejsapi=1&&widgetid=3&start=50&rel=0"
             title="YouTube video player"
             frameBorder="0"
             allowFullScreen

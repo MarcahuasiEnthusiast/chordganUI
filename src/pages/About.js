@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 
 const CustomCard = styled(Card)(({ theme }) => ({
     backgroundColor: '#999999',
-    color: '#fdfdfd',
+    color: '#272727',
     padding:'8px',
     boxShadow: "-7px 7px 7px rgb(88,88,88)"
 
@@ -54,7 +54,7 @@ const About = () => {
 
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline'}} >
+                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline', color:'#fdfdfd', paddingBottom:'10px'}} >
                                     Alexander Melendez
                                 </Typography>
                                 <Typography variant="body1" sx={{textAlign: 'justify'}}>
@@ -106,7 +106,7 @@ const About = () => {
                                 image={roberto}
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline'}} >
+                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline', color:'#fdfdfd', paddingBottom:'10px'}} >
                                     Roberto Vega
                                 </Typography>
                                 <Typography variant="body1" sx={{textAlign: 'justify'}}>
