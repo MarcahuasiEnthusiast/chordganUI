@@ -1,16 +1,13 @@
 import React from 'react';
+import ReactPlayer from 'react-player';
 import '../VideoBackground.css';
 
 const VideoBackground = () => {
     return (
-        <div className="video-background">
-        <iframe
-            src="https://www.youtube.com/embed/videoseries?list=PLy1bC-662HHKXOVHInxvhSRReDz0d4xCI&index=5&autoplay=1&mute=1&modestbranding=1&showinfo=0&enablejsapi=1&&widgetid=3&start=50&rel=0"
-            title="YouTube video player"
-            frameBorder="0"
-            allowFullScreen
-            allow="autoplay; encrypted-media;"/>
-    </div>
+        <div>
+            <ReactPlayer style={{pointerEvents:'none'}} width="99vw" height="100vh"  controls='false' playing='true'
+                         muted url='https://www.youtube.com/watch?v=-T3LcxYNUMM&list=PLaTP_B8K0vdiUP8f3h6Y2930CJS4e_e4H&index=3'></ReactPlayer>
+        </div>
 );
 }
 export default VideoBackground;

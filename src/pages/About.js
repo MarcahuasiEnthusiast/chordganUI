@@ -11,6 +11,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import IconButton from "@mui/material/IconButton";
+import VideoBackground from '../components/VideoBackground'
 
 const CustomCard = styled(Card)(({ theme }) => ({
     backgroundColor: '#999999',
@@ -37,12 +38,17 @@ const About = () => {
     return (
 
         <div>
-                <TitleTypography gutterBottom variant="h3" component="div" >
-                    Meet the team behind this awesome project
-                </TitleTypography>
+                <VideoBackground/>
+
+            <TitleTypography gutterBottom variant="h3" component="div" style={{ fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem', position:'absolute',  top: '100px', right:'0px', left:'0px'}} >
+                Meet the team behind this awesome project
+            </TitleTypography>
             <Grid container spacing={6} direction="row"
-                  justifyContent="center"
-                  alignItems="flex-start" >
+                  alignItems="center"
+                  position="absolute"
+                  sx={{display: 'flex', justifyContent: 'center', top: '225px', right:'0px', left:'0px', paddingX:'110px'}}>
                 <Grid item xs={5} >
                     <Paper>
                         <CustomCard>
@@ -54,7 +60,9 @@ const About = () => {
 
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline', color:'#fdfdfd', paddingBottom:'10px'}} >
+                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline', color:'#fdfdfd', paddingBottom:'10px', fontFamily: 'monospace',
+                                    fontWeight: 700,
+                                    letterSpacing: '.2rem'}} >
                                     Alexander Melendez
                                 </Typography>
                                 <Typography variant="body1" sx={{textAlign: 'justify'}}>
@@ -63,32 +71,32 @@ const About = () => {
                             </CardContent>
                             <CardActions>
                                 <CustomIconButton>
-                                    <a className='socialIcon' href="https://www.facebook.com">
+                                    <a className='socialIcon' href="https://www.facebook.com" target="_blank">
                                         <FacebookIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton>
-                                    <a className='socialIcon' href="https://www.instagram.com">
+                                    <a className='socialIcon' href="https://www.instagram.com" target="_blank">
                                         <InstagramIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton >
-                                    <a className='socialIcon' href="https://www.twitter.com">
+                                    <a className='socialIcon' href="https://www.twitter.com" target="_blank">
                                         <TwitterIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton>
-                                    <a className='socialIcon' href="https://www.youtube.com">
+                                    <a className='socialIcon' href="https://www.youtube.com" target="_blank">
                                         <YouTubeIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton >
-                                    <a className='socialIcon' href="https://www.github.com">
+                                    <a className='socialIcon' href="https://www.github.com" target="_blank">
                                         <GitHubIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton >
-                                    <a className='socialIcon' href="https://www.linkedin.com">
+                                    <a className='socialIcon' href="https://www.linkedin.com" target="_blank">
                                         <LinkedInIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
@@ -106,7 +114,9 @@ const About = () => {
                                 image={roberto}
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline', color:'#fdfdfd', paddingBottom:'10px'}} >
+                                <Typography gutterBottom variant="h5" component="div" sx={{textDecoration: 'underline', color:'#fdfdfd', paddingBottom:'10px', fontFamily: 'monospace',
+                                    fontWeight: 700,
+                                    letterSpacing: '.2rem'}} >
                                     Roberto Vega
                                 </Typography>
                                 <Typography variant="body1" sx={{textAlign: 'justify'}}>
@@ -115,32 +125,32 @@ const About = () => {
                             </CardContent>
                             <CardActions>
                                 <CustomIconButton>
-                                    <a className='socialIcon' href="https://www.facebook.com">
+                                    <a className='socialIcon' href="https://www.facebook.com" target="_blank">
                                         <FacebookIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton>
-                                    <a className='socialIcon' href="https://www.instagram.com">
+                                    <a className='socialIcon' href="https://www.instagram.com" target="_blank">
                                         <InstagramIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton >
-                                    <a className='socialIcon' href="https://www.twitter.com">
+                                    <a className='socialIcon' href="https://www.twitter.com" target="_blank">
                                         <TwitterIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton>
-                                    <a className='socialIcon' href="https://www.youtube.com">
+                                    <a className='socialIcon' href="https://www.youtube.com" target="_blank">
                                         <YouTubeIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton >
-                                    <a className='socialIcon' href="https://www.github.com">
+                                    <a className='socialIcon' href="https://www.github.com" target="_blank">
                                         <GitHubIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
                                 <CustomIconButton >
-                                    <a className='socialIcon' href="https://www.linkedin.com">
+                                    <a className='socialIcon' href="https://www.linkedin.com" target="_blank">
                                         <LinkedInIcon sx={{ fontSize: 30 }}/>
                                     </a>
                                 </CustomIconButton>
