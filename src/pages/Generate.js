@@ -175,7 +175,7 @@ class Generate extends Component {
     var generateResponse = ""
     this.setState({generationWaitingForResponse: true, success: false, downloadDisabled: true})
 
-    await fetch('/config_inference', requestOptions).catch(error => {
+    await fetch('https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/config_inference', requestOptions).catch(error => {
       console.log("config inference:", error);
       this.setState({generationWaitingForResponse: false})
       this.handleClick()
@@ -190,7 +190,7 @@ class Generate extends Component {
       this.handleClick()
     })
     .then(
-      fetch('/generate').catch(error => {
+      fetch('https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/generate').catch(error => {
         console.log(error);
         this.setState({generationWaitingForResponse: false})
         this.handleClick()
@@ -208,7 +208,7 @@ class Generate extends Component {
           this.setState({generationWaitingForResponse: false})
           this.setState({downloadDisabled: false})
           // Load dropdown options with generated data
-          fetch('/listMidiFiles').then(response => response.json()).then(data => this.setState({success: true, filesArray: data})).then(data => console.log("FILES ARRAY:", data))
+          fetch('https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/listMidiFiles').then(response => response.json()).then(data => this.setState({success: true, filesArray: data})).then(data => console.log("FILES ARRAY:", data))
         }
         else {
           console.log("ERROR when generating: ", generateResponse)
@@ -249,7 +249,7 @@ class Generate extends Component {
   async downloadAll() {
     console.log("Download ... ")
 
-    fetch('/get-files', {
+    fetch('https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/get-files', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -312,7 +312,7 @@ class Generate extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ filename: obj.props.value })
     };
-    await fetch('/getFile', requestOptions).then((response) => {
+    await fetch('https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/getFile', requestOptions).then((response) => {
       //console.log(response)
       response.blob().then((blob) => {
         download(blob,obj.props.value, false)
@@ -385,15 +385,6 @@ class Generate extends Component {
 
     }
   }
-
-
-
-
-
-
-
-
-
 
   // UI
 
@@ -483,7 +474,7 @@ class Generate extends Component {
 
                   <Stack direction="row" spacing={3}  className='lowerPanelStyling' >
                     <CustomButton variant="text"  onClick={this.generate}>Generate</CustomButton>
-                    {/* <Button href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} variant="contained" className='Download-Button' sx={generateButtonStyling} download="generated.zip">Download</Button> */}
+                    {/* <Button href="https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/get-files" disabled={this.state.downloadDisabled} variant="contained" className='Download-Button' sx={generateButtonStyling} download="generated.zip">Download</Button> */}
                   </Stack>
                 </div>
 
@@ -524,10 +515,10 @@ class Generate extends Component {
                             </tone-content>
                           </div>
                           <div className='downloadButtonStyling'>
-                            <CustomButton type='submit' href='http://localhost:5000/getFile' disabled={this.state.selectedMIDI && false} sx={{borderRadius: 45, width: 105, fontSize:'12px', right:30, top:5}} variant="text"  download={this.state.selectedMIDI}>Download Selected</CustomButton>
+                            <CustomButton type='submit' href='https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/getFile' disabled={this.state.selectedMIDI && false} sx={{borderRadius: 45, width: 105, fontSize:'12px', right:30, top:5}} variant="text"  download={this.state.selectedMIDI}>Download Selected</CustomButton>
                           </div>
                           <div className='downloadButtonStyling'>
-                            <CustomButton href="http://localhost:5000/get-files" disabled={this.state.downloadDisabled} sx={{borderRadius: 65, width: 105, fontSize:'12px', right:30, top:5}} variant="text" className='Download-Button'  download="generated.zip">Download All</CustomButton>
+                            <CustomButton href="https://ec2-54-235-27-182.compute-1.amazonaws.com:6565/get-files" disabled={this.state.downloadDisabled} sx={{borderRadius: 65, width: 105, fontSize:'12px', right:30, top:5}} variant="text" className='Download-Button'  download="generated.zip">Download All</CustomButton>
                           </div>
                         </Stack>
 
